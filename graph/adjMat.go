@@ -71,3 +71,67 @@ func (g AdjMat) ToDot() dot.Graph {
 
 	return *dg
 }
+
+// O(|V| + |E|)
+func (g AdjMat) IsAcyclic() bool {
+	// Eingangsgrade berechnen
+	indeg := make(map[Node]int)
+
+	// O(|V| + |E|)
+	for _, elem := range g {
+		for node, isEdge := range elem {
+			if isEdge {
+				indeg[Node(node)]++
+			}
+		}
+	}
+
+	// übernehme alle Knoten mit Eingangsgrad 0 in "stack"
+	indegZero := make([]Node, 0)
+
+	// O(|V|)
+	for i := range g {
+		if i == 0 {
+			continue
+		}
+
+		n := Node(i)
+
+		if indeg[n] == 0 {
+			indegZero = append(indegZero, n)
+		}
+	}
+
+	// topologische Ordnung berechnen
+	seqNo := 0
+	ord := make(map[Node]int)
+
+	// O(|V| + |E|)
+	// maximal durch alle Knoten
+	// jeder Pfeil insgesamt über alle inneren Schleifen je einmal
+	for len(indegZero) > 0 {
+		// nehme den nächsten vom Stack
+		lastIdx := len(indegZero) - 1
+		v := indegZero[lastIdx]
+		indegZero = indegZero[:lastIdx]
+		seqNo++
+		ord[v] = seqNo
+
+		// dekrementiere Eingangsgrade aller Knoten die Endknoten
+		// eines Pfeiles sind, von dem v der Anfangsknoten ist
+		for i, isEdge := range g[v] {
+			node := Node(i)
+
+			if isEdge {
+				indeg[node]--
+				if indeg[node] == 0 {
+					indegZero = append(indegZero, node)
+				}
+			}
+		}
+	}
+
+	// wenn jeder Knoten eine laufende Nummer bekommen hat,
+	// ist der Graph azyklisch.
+	return seqNo == len(g)-1
+}

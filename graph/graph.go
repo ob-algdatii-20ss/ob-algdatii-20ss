@@ -13,4 +13,5 @@ type Graph interface {
 	AddEdge(from Node, to Node)
 	Edges() []Edge
 	ToDot() dot.Graph
+	IsAcyclic() bool
 }

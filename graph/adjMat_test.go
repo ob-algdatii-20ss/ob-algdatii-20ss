@@ -90,3 +90,22 @@ func benchmarkHelper(b *testing.B, g Graph) {
 		g.Edges()
 	}
 }
+
+func TestIsAcyclicMat(t *testing.T) {
+	cases := []struct {
+		graph     AdjMat
+		isAcyclic bool
+	}{
+		{NewGraphAdjMat(1), true},
+		{NewGraphAdjMat(1, &Edge{1, 1}), false},
+		{NewGraphAdjMat(2, &Edge{1, 2}), true},
+		{NewGraphAdjMat(2, &Edge{1, 2}, &Edge{2, 1}), false},
+	}
+
+	for _, c := range cases {
+		got := c.graph.IsAcyclic()
+		if got != c.isAcyclic {
+			t.Errorf("%v IsAcyclic() == %v, want %v", c.graph, got, c.isAcyclic)
+		}
+	}
+}
