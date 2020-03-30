@@ -1,5 +1,7 @@
 package graph
 
+import "github.com/emicklei/dot"
+
 type Node int
 
 type Edge struct {
@@ -10,4 +12,5 @@ type Edge struct {
 type Graph interface {
 	AddEdge(from Node, to Node)
 	Edges() []Edge
+	ToDot() dot.Graph
 }

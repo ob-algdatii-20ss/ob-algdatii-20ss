@@ -1,5 +1,11 @@
 package graph
 
+import (
+	"fmt"
+
+	"github.com/emicklei/dot"
+)
+
 type AdjMat [][]bool
 
 func NewGraphAdjMat(nodes int) AdjMat {
@@ -35,4 +41,29 @@ func (g AdjMat) Edges() []Edge {
 	}
 
 	return es
+}
+
+func (g AdjMat) ToDot() dot.Graph {
+	dg := dot.NewGraph(dot.Directed)
+
+	for i, col := range g {
+		if i == 0 {
+			continue
+		}
+
+		f := dg.Node(fmt.Sprintf("%d", i))
+
+		for j, edge := range col {
+			if i == 0 {
+				continue
+			}
+
+			if edge {
+				t := dg.Node(fmt.Sprintf("%d", j))
+				dg.Edge(f, t)
+			}
+		}
+	}
+
+	return *dg
 }
