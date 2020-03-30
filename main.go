@@ -7,17 +7,17 @@ import (
 )
 
 func main() {
-	var g graph.Graph = graph.NewGraphAdjMat(9)
-	g.AddEdge(1, 2)
-	g.AddEdge(1, 3)
-	g.AddEdge(1, 7)
-	g.AddEdge(4, 6)
-	g.AddEdge(5, 4)
-	g.AddEdge(6, 1)
-	g.AddEdge(6, 5)
-	g.AddEdge(6, 6)
-	g.AddEdge(7, 5)
-	g.AddEdge(9, 8)
+	var g graph.Graph = graph.NewGraphAdjLst(9,
+		&graph.Edge{1, 2},
+		&graph.Edge{1, 3},
+		&graph.Edge{1, 7},
+		&graph.Edge{4, 6},
+		&graph.Edge{5, 4},
+		&graph.Edge{6, 1},
+		&graph.Edge{6, 5},
+		&graph.Edge{6, 6},
+		&graph.Edge{7, 5},
+		&graph.Edge{9, 8})
 
 	fmt.Println(g.ToDot().String())
 }

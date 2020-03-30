@@ -23,7 +23,7 @@ func TestAdjMat(t *testing.T) {
 	}
 
 	for _, edge := range wantedEdges {
-		g.AddEdge(edge.from, edge.to)
+		g.AddEdge(edge.From, edge.To)
 	}
 
 	// Method under test
@@ -33,7 +33,7 @@ func TestAdjMat(t *testing.T) {
 outerWanted:
 	for _, wanted := range wantedEdges {
 		for _, got := range gotEdges {
-			if wanted.from == got.from && wanted.to == got.to {
+			if wanted.From == got.From && wanted.To == got.To {
 				continue outerWanted
 			}
 		}
@@ -43,7 +43,7 @@ outerWanted:
 outerGot:
 	for _, got := range gotEdges {
 		for _, wanted := range wantedEdges {
-			if wanted.from == got.from && wanted.to == got.to {
+			if wanted.From == got.From && wanted.To == got.To {
 				continue outerGot
 			}
 		}
@@ -73,7 +73,7 @@ func mkExampleGraph(g Graph) {
 		{9, 8},
 	}
 	for _, edge := range edges {
-		g.AddEdge(edge.from, edge.to)
+		g.AddEdge(edge.From, edge.To)
 	}
 }
 

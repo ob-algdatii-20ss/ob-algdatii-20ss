@@ -8,10 +8,14 @@ import (
 
 type AdjMat [][]bool
 
-func NewGraphAdjMat(nodes int) AdjMat {
-	g := make([][]bool, nodes+1)
+func NewGraphAdjMat(nodes int, edges ...*Edge) AdjMat {
+	var g AdjMat = make([][]bool, nodes+1)
 	for c := range g {
 		g[c] = make([]bool, nodes+1)
+	}
+
+	for _, edge := range edges {
+		g.AddEdge(edge.From, edge.To)
 	}
 
 	return g
