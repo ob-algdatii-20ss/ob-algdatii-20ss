@@ -135,3 +135,31 @@ func (g AdjMat) IsAcyclic() bool {
 	// ist der Graph azyklisch.
 	return seqNo == len(g)-1
 }
+
+func (g AdjMat) TransitiveClosure() Graph {
+	closure := NewGraphAdjMat(len(g) - 1)
+
+	for i := range g {
+		copy(closure[i], g[i])
+	}
+
+	n := Node(len(closure) - 1)
+
+	for i := Node(1); i <= n; i++ {
+		closure.AddEdge(i, i)
+	}
+
+	for j := Node(1); j <= n; j++ {
+		for i := Node(1); i <= n; i++ {
+			if closure[i][j] {
+				for k := Node(1); k <= n; k++ {
+					if closure[j][k] {
+						closure.AddEdge(i, k)
+					}
+				}
+			}
+		}
+	}
+
+	return closure
+}

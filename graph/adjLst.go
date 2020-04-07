@@ -120,3 +120,7 @@ func (g AdjLst) IsAcyclic() bool {
 	// ist der Graph azyklisch.
 	return seqNo == len(g)-1
 }
+
+func (g AdjLst) TransitiveClosure() Graph {
+	panic("not implemented")
+}

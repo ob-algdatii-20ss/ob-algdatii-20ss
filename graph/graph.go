@@ -14,4 +14,5 @@ type Graph interface {
 	Edges() []Edge
 	ToDot() dot.Graph
 	IsAcyclic() bool
+	TransitiveClosure() Graph
 }
